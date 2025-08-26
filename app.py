@@ -3,6 +3,7 @@ import requests
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
+import re
 
 load_dotenv()
 
@@ -71,11 +72,11 @@ def webhook():
 
                     if "text" in message:
                         text = message["text"].lower().strip()
-                        print(f"[User] {text}")
+                        
 
                         # Show welcome menu
                         if (
-                            any(word in text.lower() for word in greeting_pattern) 
+                            any(re.fullmatch(rf"\b{re.escape(word)}\b", text) for word in greeting_pattern)
                             and text.count(" ") < 4 
                         ):
                                 HUMAN_HANDOVER.discard(sender_id)
@@ -103,7 +104,6 @@ def get_auto_reply(message, sender_id):
     for keyword, reply in AUTO_REPLIES.items():
         if keyword in message:
             if "talk to human" in keyword:
-                print(f"[ALERT] User {sender_id} requested human help")
                 HUMAN_HANDOVER.add(sender_id)
             return reply
     return None
@@ -121,7 +121,6 @@ def get_gpt_response(message):
         )
         return response.choices[0].message.content.strip()
     except Exception as e:
-        print(f"[ERROR] GPT error: {e}")
         return "Sorry, I had trouble responding. Try again later."
 
 
