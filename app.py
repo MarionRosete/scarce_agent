@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, send_from_directory
 import requests
 import os
 from dotenv import load_dotenv
@@ -51,6 +51,10 @@ def verify():
     if request.args.get("hub.verify_token") == VERIFY_TOKEN:
         return request.args.get("hub.challenge")
     return "Verification failed", 403
+
+@app.route('/privacy-policy')
+def privacy_policy():
+    return send_from_directory('static/privacy-policy', 'index.html')
 
 greeting_pattern = ["hi", "hello", "good day", "bossing", "good pm", "good am", "hey", "boss", "bro"] 
 
