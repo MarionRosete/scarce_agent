@@ -19,15 +19,17 @@ app = Flask(__name__)
 
 # Quick Reply Titles (shown as buttons in Messenger)
 QUICK_REPLIES = [
+    "💬 Talk to Human",
     "👟 View Catalog",
     "📦 How to Order",
     "💰 Payment Options",
     "🚚 Shipping Info",
-    "💬 Talk to Human"
+    
 ]
 
 # Auto replies for common FAQs
 AUTO_REPLIES = {
+    "💬 talk to human": "Got it! We'll connect you with someone from the team asap 👍 You can continue chatting here and a real person will reply shortly.",
     "👟 view catalog": "Here’s our catalog 🔥 Check what’s available here:\n👉 https://marionrosete.github.io/ScarcePH",
     "📦 how to order": "Simple lang! 👇\n1️⃣ Browse the catalog or FB posts\n2️⃣ Message us to reserve/order\n3️⃣ We’ll confirm and send payment details\n\nKung COD/COP, ₱500 deposit is needed 😊",
     "💰 payment options": "You can pay via:\n💸 GCash\n🏦 BPI\n🚚 COD/COP (with ₱500 deposit)\n\n*Reservation deposit is non-refundable.*",
@@ -35,7 +37,6 @@ AUTO_REPLIES = {
     "pics": "Paki-check muna sa Facebook posts for more pics 📸\nOwner might send extra pics soon if available.",
     "reserve": "Yes, you can reserve! 🔒 Just send ₱500 deposit via GCash or BPI. Non-refundable to avoid flake buyers 😄",
     "💬 talk to human": "Got it! We'll connect you with someone from the team asap 👍 You can continue chatting here and a real person will reply shortly."
-
 }
 
 HUMAN_HANDOVER = set()
