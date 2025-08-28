@@ -58,8 +58,6 @@ def verify():
 def privacy_policy():
     return send_from_directory('static/privacy-policy', 'index.html')
 
-greeting_pattern = ["hi", "hello", "good day", "bossing", "good pm", "good am", "hey", "boss", "bro"] 
-
 @app.route("/webhook", methods=["POST"])
 def webhook():
     data = request.get_json()
@@ -68,6 +66,15 @@ def webhook():
             for event in entry["messaging"]:
                 sender_id = event["sender"]["id"]
 
+                if "postback" in event:
+                    postback = event["postback"]
+                    if postback.get("payload") == "GET_STARTED":
+                        HUMAN_HANDOVER.discard(sender_id)
+                        welcome_text = "Hi there! 👋 How can I help you today?"
+                        send_text_message(sender_id, welcome_text, quick_replies=QUICK_REPLIES)
+                        continue
+
+
                 if "message" in event:
                     message = event["message"]
 
@@ -75,15 +82,6 @@ def webhook():
                         text = message["text"].lower().strip()
                         
 
-                        # Show welcome menu
-                        if (
-                            any(re.fullmatch(rf"\b{re.escape(word)}\b", text) for word in greeting_pattern)
-                            and text.count(" ") < 4 
-                        ):
-                                HUMAN_HANDOVER.discard(sender_id)
-                                welcome_text = "Hey there! 👋 What would you like to know?"
-                                send_text_message(sender_id, welcome_text, quick_replies=QUICK_REPLIES)
-                                continue
                         # Check for auto reply
                         auto_reply = get_auto_reply(text, sender_id)
                         if auto_reply:
