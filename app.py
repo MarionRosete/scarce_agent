@@ -124,7 +124,7 @@ def get_gpt_response(message):
         return response.choices[0].message.content.strip()
     except Exception as e:
         print(f"[ERROR] GPT request failed: {e}")
-        return "Sorry, I had trouble responding. Try again later."
+        return "We will get back to you shortly! - Automated Message"
 
 
 def send_text_message(recipient_id, message_text, quick_replies=None):
