@@ -123,6 +123,7 @@ def get_gpt_response(message):
         )
         return response.choices[0].message.content.strip()
     except Exception as e:
+        print(f"[ERROR] GPT request failed: {e}")
         return "Sorry, I had trouble responding. Try again later."
 
 
