@@ -111,7 +111,7 @@ def get_auto_reply(message, sender_id):
 def get_gpt_response(message):
     try:
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-5-nano",
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": message}
