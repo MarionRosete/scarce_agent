@@ -111,12 +111,15 @@ def get_auto_reply(message, sender_id):
 def get_gpt_response(message):
     try:
         response = client.chat.completions.create(
-            model="gpt-5-nano",
+            model="gpt-5-nano",             # Use GPT‑5 nano
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": message}
             ],
-            max_completion_tokens=100,
+            max_tokens=100,
+            temperature=0.7,
+            reasoning_effort="low",         # Optional: prioritize speed/cost
+            verbosity="low"                 # Optional: concise responses
         )
         return response.choices[0].message.content.strip()
     except Exception as e:
