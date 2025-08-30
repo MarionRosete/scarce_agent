@@ -70,7 +70,7 @@ def webhook():
                     postback = event["postback"]
                     if postback.get("payload") == "GET_STARTED":
                         HUMAN_HANDOVER.discard(sender_id)
-                        welcome_text = "Hi there! 👋 How can I help you today?"
+                        welcome_text = "Hi there! Welcome to Scarceᴾᴴ 👋 How can we assist you today? Here are some quick options to get started:"
                         send_text_message(sender_id, welcome_text, quick_replies=QUICK_REPLIES)
                         continue
 
@@ -89,7 +89,7 @@ def webhook():
 
                         # If user asked for human help, stop GPT responses
                         elif sender_id in HUMAN_HANDOVER:
-                            send_text_message(sender_id, "A human team member will assist you soon 👍")
+                            send_text_message(sender_id, "Scarceᴾᴴ Owner will reply soon!")
 
                         # Otherwise use GPT
                         else:
@@ -116,11 +116,16 @@ def get_gpt_response(message):
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": message}
             ],
-            max_completion_tokens=100,
+            max_completion_tokens=300,
             reasoning_effort="low",         # Optional: prioritize speed/cost
             verbosity="low"                 # Optional: concise responses
         )
-        return response.choices[0].message.content.strip()
+    
+        content = response.choices[0].message.content.strip()
+        if not content:
+            print("[WARN] GPT returned an empty message.")
+            return "We will get back to you shortly! - Automated Message"
+        return content
     except Exception as e:
         print(f"[ERROR] GPT request failed: {e}")
         return "We will get back to you shortly! - Automated Message"
