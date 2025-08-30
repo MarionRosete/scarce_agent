@@ -116,9 +116,8 @@ def get_gpt_response(message):
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": message}
             ],
-            max_completion_tokens=300,
             reasoning_effort="low",         # Optional: prioritize speed/cost
-            verbosity="low"                 # Optional: concise responses
+           
         )
     
         content = response.choices[0].message.content.strip()
