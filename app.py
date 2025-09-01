@@ -111,12 +111,12 @@ def get_auto_reply(message, sender_id):
 def get_gpt_response(message):
     try:
         response = client.chat.completions.create(
-            model="gpt-5-nano",             # Use GPT‑5 nano
+            model="gpt-5-nano",            
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": message}
             ],
-            reasoning_effort="low",         # Optional: prioritize speed/cost
+            reasoning_effort="medium",       
            
         )
     
