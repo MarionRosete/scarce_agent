@@ -67,7 +67,7 @@ def webhook():
                     postback = event["postback"]
                     if postback.get("payload") == "GET_STARTED":
                         HUMAN_HANDOVER.discard(sender_id)
-                        welcome_text = "Hi there! Welcome to Scarceᴾᴴ 👋 How can we assist you today? Here are some quick options to get started:"
+                        welcome_text = "Hi there! Welcome to Scarceᴾᴴ 👋 \n How can we assist you today? \n Here are some quick options to get started:"
                         send_text_message(sender_id, welcome_text, quick_replies=QUICK_REPLIES)
                         continue
 
@@ -86,7 +86,7 @@ def webhook():
 
                         # If user asked for human help, stop GPT responses
                         elif sender_id in HUMAN_HANDOVER:
-                            send_text_message(sender_id, "Scarceᴾᴴ Owner will reply soon!")
+                            send_text_message(sender_id, "A human agent will assist you shortly! \n Meanwhile, feel free to explore our quick options below.")
 
                         # Otherwise use GPT
                         else:
